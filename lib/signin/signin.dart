@@ -38,11 +38,7 @@ class Signin extends StatelessWidget {
                         left: MediaQuery.of(context).size.width * 0.09),
                     child: Image.asset("assets/images/login.png"),
                   ),
-                  InputField(
-                    headerText: "Username",
-                    hintTexti: "Username",
-                    visible: false,
-                  ),
+                  InputField(headerText: "Username", hintTexti: "Username"),
                   const SizedBox(
                     height: 10,
                   ),
@@ -54,11 +50,9 @@ class Signin extends StatelessWidget {
                   // const SizedBox(
                   //   height: 10,
                   // ),
-                  InputField(
-                    headerText: "Password",
-                    hintTexti: "At least 8 Charecter",
-                    visible: true,
-                  ),
+                  InputFieldPassword(
+                      headerText: "Password",
+                      hintTexti: "At least 8 Charecter"),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,12 +180,7 @@ class _CheckerBoxState extends State<CheckerBox> {
 class InputField extends StatelessWidget {
   String headerText;
   String hintTexti;
-  bool visible;
-  InputField(
-      {Key? key,
-      required this.headerText,
-      required this.hintTexti,
-      required this.visible})
+  InputField({Key? key, required this.headerText, required this.hintTexti})
       : super(key: key);
 
   @override
@@ -232,6 +221,70 @@ class InputField extends StatelessWidget {
             //IntrinsicHeight
 
             ),
+      ],
+    );
+  }
+}
+
+class InputFieldPassword extends StatefulWidget {
+  String headerText;
+  String hintTexti;
+
+  InputFieldPassword(
+      {Key? key, required this.headerText, required this.hintTexti})
+      : super(key: key);
+
+  @override
+  State<InputFieldPassword> createState() => _InputFieldPasswordState();
+}
+
+class _InputFieldPasswordState extends State<InputFieldPassword> {
+  bool _visible = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: 10,
+          ),
+          child: Text(
+            widget.headerText,
+            style: const TextStyle(
+                color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 20, right: 20),
+          decoration: BoxDecoration(
+            color: grayshade.withOpacity(0.5),
+            // border: Border.all(
+            //   width: 1,
+            // ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: TextField(
+              obscureText: _visible,
+              decoration: InputDecoration(
+                  hintText: widget.hintTexti,
+                  border: InputBorder.none,
+                  suffixIcon: IconButton(
+                      icon: Icon(
+                          _visible ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          _visible = !_visible;
+                        });
+                      })),
+            ),
+          ),
+        ),
       ],
     );
   }
